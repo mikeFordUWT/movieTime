@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBConnection {
 	
-	private static String USER = "fordm13";
+	private static String USER = "root";
 	
 	private static String PASS = "mikeServer";
 	
