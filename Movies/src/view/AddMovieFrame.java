@@ -23,7 +23,7 @@ public class AddMovieFrame extends JFrame{
 	private JPanel upperPanel;
 	
 	
-	private JTextField title;
+	private JTextField titleField;
 	private JTextField runTime;
 	private JTextField releaseDate;
 	private JTextField boxOffice;
@@ -72,9 +72,9 @@ public class AddMovieFrame extends JFrame{
 		
 		Box titleBox = Box.createHorizontalBox();
 		JLabel titleLabel = new JLabel("Title: ");
-		title = new JTextField("", 15);
+		titleField = new JTextField("", 15);
 		titleBox.add(titleLabel);
-		titleBox.add(title);
+		titleBox.add(titleField);
 		wholeBox.add(titleBox);
 		
 		Box runBox = Box.createHorizontalBox();
@@ -169,13 +169,15 @@ public class AddMovieFrame extends JFrame{
 		
 	}
 
-	public String getTitle() {
-		return title.getText();
-	}
-	
 	public JTextField getRunTime() {
 		return runTime;
 	}
+	
+	public JTextField getMovieTitle() {
+		return titleField;
+	}
+	
+	
 	
 	public JTextField getReleaseDate() {
 		return releaseDate;

@@ -198,5 +198,18 @@ public class Runner {
 	private static void getSearchResultsListeners(){
 
 	}
+	
+	private static void getAddMovieListeners(){
+//		getAddTitle();
+	}
+	
+//	private static void getAddTitle(){
+//		addFr.getMovieTitle().addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e){
+//				
+//			}
+//		});
+//	}
 
 }
