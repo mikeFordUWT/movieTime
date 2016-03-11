@@ -8,17 +8,18 @@ public class Movie {
 	private int myYear;
 	private int myBoxOffice;
 	private String myMpaa;
-	private String movieID;
 	private ArrayList<Actor> myActors;
+	private Director director;
 
-	public Movie(String id, String title, int runTime, int year, int boxOffice, String mpaa) {
-		movieID = id;
+	public Movie(String title, int runTime, int year, int boxOffice, String mpaa) {
+		
 		myTitle = title;
 		myRunTime = runTime;
 		myYear = year;
 		myBoxOffice = boxOffice;
 		myMpaa = mpaa;
 		myActors = new ArrayList<Actor>();
+		director = null;
 	}
 
 	public String getTitle(){
@@ -42,10 +43,18 @@ public class Movie {
 		return myMpaa;
 	}
 
-	public String getID(){
-		return movieID;
-	}
+//	public String getID(){
+//		return movieID;
+//	}
 
+	public void setDirector(Director direct){
+		director = direct;
+	}
+	
+	public Director getDirector(){
+		return director;
+	}
+	
 	public void addActor(Actor inputActor){
 		myActors.add(inputActor);
 	}
