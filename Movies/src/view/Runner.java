@@ -2,7 +2,7 @@ package view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.util.ArrayList;
 
 import data.Actor;
 import data.Director;
@@ -18,7 +18,7 @@ public class Runner {
 	private static SearchResultFrame<Director> searchDirectorFr;
 
 	private static Movie currentMovie;
-
+	private static AddMovieFrame addFr;
 	private static User currentUser;
 	public static void main(String[] args) {
 		logFr = new LogInFrame();
@@ -44,6 +44,17 @@ public class Runner {
 
 
 		movieFr = new MovieFrame(currentMovie, currentUser, 4.5);
+		
+		ArrayList<String> genres = new ArrayList<String>();
+		genres.add("Action");
+		genres.add("Sci-Fi");
+		
+		ArrayList<String> ratings = new ArrayList<String>();
+		ratings.add("G");
+		ratings.add("PG");
+		
+		addFr = new AddMovieFrame(genres, ratings);
+		
 //		movieFr.setVisible(false);
 		listeners();
 		

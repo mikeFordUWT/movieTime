@@ -36,7 +36,7 @@ public class UserFrame extends JFrame {
 	
 	private JLabel reelLogo;
 	
-	private JLabel logOut;
+	private JButton logOut;
 	
 	private JPanel upperPanel;
 	private JPanel centerPanel;
@@ -92,7 +92,7 @@ public class UserFrame extends JFrame {
 		reelLogo.setAlignmentX(.5f);
 		reelLogo.setBackground(back);
 		
-		logOut = new JLabel("<HTML><U>LOG OUT</U></HTML>");
+		logOut = new JButton("Log Out");
 		logOut.setAlignmentX(.5f);
 		
 		upperBox.add(reelLogo);
@@ -165,7 +165,7 @@ public class UserFrame extends JFrame {
 		currentUser = inputUser;
 	}
 	
-	public JLabel getLogOut() {
+	public JButton getLogOut() {
 		return logOut;
 	}
 	

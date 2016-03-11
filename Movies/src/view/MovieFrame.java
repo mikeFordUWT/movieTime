@@ -17,7 +17,7 @@ import data.Movie;
 import data.User;
 
 public class MovieFrame extends JFrame {
-	private static final int LOGO_SIZE = 0;
+	private static final int LOGO_SIZE = 25;
 
 	//The movie a page will be based on
 	private Movie myMovie;
@@ -164,7 +164,6 @@ public class MovieFrame extends JFrame {
 		mainUpper.add(reelLogo);
 		
 		northPanel.setBackground(upperBarColor);
-		upperBox.add(reelLogo);
 		upperBox.add(homeButton);
 		upperBox.add(logOut);
 		upperBox.setBackground(upperBarColor);
