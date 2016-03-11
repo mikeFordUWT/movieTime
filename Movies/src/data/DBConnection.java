@@ -74,7 +74,7 @@ public class DBConnection {
 				+ "FROM "
 				+ "movie"
 				+ "WHERE"
-				+ "movie.movie_ID = \'%" + movieTitle + "%\';";
+				+ "movie.movie_ID = '%" + movieTitle + "%';";
 		ResultSet rset = state.executeQuery(queryString);
 		while(rset.next()) {
 			
@@ -89,14 +89,40 @@ public class DBConnection {
 				mpaa = mset.getString("rating");
 			}
 			Movie m = new Movie(title, runTime, release, boxOffice, mpaa);
-			//TODO get actors and director
 			
 			
-			
+			String actorQuery = "select A.fname, A.mname, A.lname "
+					+ "from actor A natural join actor_movie AM "
+					+ "natural join (select movie_ID "
+					+ "from movie "
+					+ "where title = '"+title+"') A;";
+			ResultSet aSet = state.executeQuery(actorQuery);
+			while(aSet.next()){
+				String firstName = aSet.getString("fname");
+				String midName = aSet.getString("mname");
+				String lastName = aSet.getString("lname");
+				Actor a = new Actor(firstName, midName, lastName);
+				m.addActor(a);
+				
+			}
+			String dQuery = "select distinct D.fname, D.mname, D.lname "
+					+ "from director D, (select director_ID from movie"
+					+ "where title like '"+title+"') A "
+							+ "where D.director_ID = A.director_ID;";
+			ResultSet dSet = state.executeQuery(dQuery);
+			while(dSet.next()){
+				String firstName = dSet.getString("fname");
+				String midName = dSet.getString("mname");
+				String lastName = dSet.getString("lname");
+				Director d = new Director(firstName, midName, lastName);
+				m.setDirector(d);
+			}
 			toReturn.add(m);
 		}
 		return toReturn;
 		
 	}
+	
+	
 	
 }

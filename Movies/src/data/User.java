@@ -11,8 +11,8 @@ public class User {
 	private ArrayList<Movie> watchList;
 	
 	
-	public User(String id, String first, String last, String mail) {
-		userID = id;
+	public User(String first, String last, String mail) {
+		
 		firstName = first;
 		lastName = last;
 		eMail = mail;

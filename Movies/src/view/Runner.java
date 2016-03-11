@@ -24,13 +24,13 @@ public class Runner {
 		logFr = new LogInFrame();
 		
 
-		currentUser = new User("U01", "Michael", "Ford", "fordm13@uw.edu");
+		currentUser = new User("Michael", "Ford", "fordm13@uw.edu");
 
 		
 
-		Actor a1 = new Actor("A61", "Jack", null, "Nicholson");
-		Actor a2 = new Actor("A22", "Shelley", null, "Duvall");
-		Actor a3 = new Actor("A50", "Danny", null, "Lloyd");
+		Actor a1 = new Actor("Jack", null, "Nicholson");
+		Actor a2 = new Actor("Shelley", null, "Duvall");
+		Actor a3 = new Actor("Danny", null, "Lloyd");
 		currentMovie= new Movie("The Shining", 146, 1980, 44017374, "R");
 
 		Movie Jaws = new Movie("Jaws", 115, 1976, 3737733, "PG");

@@ -4,10 +4,9 @@ public class Director {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private String directorID;
 	
-	public Director(String id, String first, String middle, String last) {
-		directorID = id;
+	public Director(String first, String middle, String last) {
+		
 		firstName = first;
 		middleName = middle;
 		lastName = last;
@@ -25,10 +24,7 @@ public class Director {
 	public String getLastName() {
 		return lastName;
 	}
-	
-	public String getID(){
-		return directorID;
-	}
+
 	
 	
 	
