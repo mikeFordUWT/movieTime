@@ -11,8 +11,8 @@ public class User {
 	private ArrayList<Movie> watchList;
 	
 	
-	public User(String first, String last, String mail) {
-		
+	public User(String id,String first, String last, String mail) {
+		userID = id;
 		firstName = first;
 		lastName = last;
 		eMail = mail;
@@ -36,6 +36,7 @@ public class User {
 	public String getEMail(){
 		return eMail;
 	}
+
 	
 	public void addToFavorites(Movie theMovie){
 		favorites.add(theMovie);

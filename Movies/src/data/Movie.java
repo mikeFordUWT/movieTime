@@ -10,9 +10,10 @@ public class Movie {
 	private String myMpaa;
 	private ArrayList<Actor> myActors;
 	private Director director;
+	private String movieId;
 
-	public Movie(String title, int runTime, int year, int boxOffice, String mpaa) {
-		
+	public Movie(String id,String title, int runTime, int year, int boxOffice, String mpaa) {
+		movieId = id;
 		myTitle = title;
 		myRunTime = runTime;
 		myYear = year;
@@ -43,9 +44,9 @@ public class Movie {
 		return myMpaa;
 	}
 
-//	public String getID(){
-//		return movieID;
-//	}
+	public String getID(){
+		return movieId;
+	}
 
 	public void setDirector(Director direct){
 		director = direct;
