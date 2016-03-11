@@ -27,11 +27,9 @@ public class UserFrame extends JFrame {
 	private final int LOGO_SIZE = 25;
 	
 	private final int WELCOME_SIZE = 20;
-	private int height;
-	private int width;
 	
-	private ArrayList<Movie> favorites;
-	private ArrayList<Movie> watchList;
+	private ArrayList<String> favorites;
+	private ArrayList<String> watchList;
 	
 	
 	private JLabel reelLogo;
@@ -58,14 +56,15 @@ public class UserFrame extends JFrame {
 		currentUser = inputUser;
 		
 		
-		setUp();
+		setUp(currentUser);
 		pack();
 		
 	}
 
 
 	
-	private void setUp(){
+	private void setUp(User input){
+		currentUser = input;
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setBounds(100,100, screenSize.width/2, screenSize.height/2);
 		this.setLayout(new BorderLayout());
@@ -145,7 +144,7 @@ public class UserFrame extends JFrame {
 		favorites = currentUser.getFavorites();
 		model.addColumn("Favorites");
 		for(int i = 0; i<favorites.size(); i++){
-			model.addRow(new String[]{favorites.get(i).getTitle()});
+			model.addRow(new String[]{favorites.get(i)});
 		}
 		
 	}
@@ -156,7 +155,7 @@ public class UserFrame extends JFrame {
 		watchList = currentUser.getWatchList();
 		model.addColumn("Watch List");
 		for(int i =0; i< watchList.size(); i++){
-			model.addRow(new String[]{watchList.get(i).getTitle()});
+			model.addRow(new String[]{watchList.get(i)});
 		}
 		
 	}
@@ -179,6 +178,19 @@ public class UserFrame extends JFrame {
 	
 	public JComboBox<String> getSearchType(){
 		return searchType;
+	}
+	
+	public void setCurrentUser(User input){
+		currentUser = input;
+		welcome.setText("Welcome, " + currentUser.getFirstName());
+		watchList = currentUser.getWatchList();
+		DefaultTableModel model = new DefaultTableModel();
+		watchTable = new JTable(model);
+		watchList = currentUser.getWatchList();
+		model.addColumn("Watch List");
+		for(int i =0; i< watchList.size(); i++){
+			model.addRow(new String[]{watchList.get(i)});
+		}
 	}
 
 	

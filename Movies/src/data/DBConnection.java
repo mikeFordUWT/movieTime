@@ -131,15 +131,8 @@ public class DBConnection {
 		
 	}
 	
-	public ArrayList<Movie> getWatchList(String email){
-		return null;
-		
-	}
-	
-	public ArrayList<Movie> getFavorites(String email){
-		return null;
-		
-	}
+
+
 	
 	public User getUser(String email) throws SQLException{
 		User u = null;
@@ -161,7 +154,7 @@ public class DBConnection {
 		
 	}
 	
-	public List<String> getFavFromUser(String userID) throws SQLException {
+	public ArrayList<String> getFavFromUser(String userID) throws SQLException {
 		Statement state = connect.createStatement();
 		ArrayList<String> movieTitle = new ArrayList<String>();
 		String query = "Select M.title From movie M, "
@@ -176,7 +169,7 @@ public class DBConnection {
 		return movieTitle;
 	}
 	
-	public List<String> getWatchFromUser(String userID) throws SQLException {
+	public ArrayList<String> getWatchFromUser(String userID) throws SQLException {
 		Statement state = connect.createStatement();
 		ArrayList<String> movieTitle = new ArrayList<String>();
 		String query = "Select M.title From movie M, "

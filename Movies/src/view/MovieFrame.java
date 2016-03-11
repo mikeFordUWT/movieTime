@@ -65,12 +65,12 @@ public class MovieFrame extends JFrame {
 //	}
 
 	//A Movie Frame for is a user is logged in.
-	public MovieFrame(Movie inputMovie, User inputUser, double rating) {
+	public MovieFrame(Movie inputMovie) {
 		super("Reel Log");
 		myMovie = inputMovie;
-		myUser = inputUser;
-		String rate = Double.toString(rating);
-		avgRating = new JLabel(rate);
+//		myUser = inputUser;
+//		String rate = Double.toString(rating);
+//		avgRating = new JLabel(rate);
 //		myUser = inputUser;
 		buildFrame();
 	
@@ -126,7 +126,7 @@ public class MovieFrame extends JFrame {
 		Box avgRateBox = Box.createHorizontalBox();
 		JLabel aR = new JLabel("Average Rating:  ");
 		avgRateBox.add(aR);
-		avgRateBox.add(avgRating);
+//		avgRateBox.add(avgRating);
 		
 		Box ratingBox = Box.createHorizontalBox();
 		rateButton = new JButton("Rate");
