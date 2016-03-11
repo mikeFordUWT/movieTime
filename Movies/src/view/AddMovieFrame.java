@@ -5,15 +5,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.NumberFormatter;
 
 public class AddMovieFrame extends JFrame{
 	
@@ -27,7 +30,7 @@ public class AddMovieFrame extends JFrame{
 	private JTextField titleField;
 	private JTextField runTime;
 	private JTextField releaseDate;
-	private JTextField boxOffice;
+	private JFormattedTextField boxOffice;
 	private JTextField directorFirst;
 	private JTextField directorLast;
 	private JTextField actor1First;
@@ -75,6 +78,12 @@ public class AddMovieFrame extends JFrame{
 		JPanel centerPanel = new JPanel();
 		Box wholeBox = Box.createVerticalBox();
 		
+		NumberFormat longFormat = NumberFormat.getIntegerInstance();
+		NumberFormatter numFormat = new NumberFormatter(longFormat);
+		numFormat.setValueClass(Long.class);
+		numFormat.setAllowsInvalid(false);
+		numFormat.setMinimum(0l);
+		
 		Box titleBox = Box.createHorizontalBox();
 		JLabel titleLabel = new JLabel("Title: ");
 		titleField = new JTextField("", 15);
@@ -86,21 +95,22 @@ public class AddMovieFrame extends JFrame{
 		
 		Box runBox = Box.createHorizontalBox();
 		JLabel runTimeL = new JLabel("Run Time(numbers only, in mins): ");
-		runTime = new JTextField("", 15);
+		runTime = new JFormattedTextField(numFormat);
 		runBox.add(runTimeL);
 		runBox.add(runTime);
 		wholeBox.add(runBox);
 		
 		Box releaseBox = Box.createHorizontalBox();
 		JLabel rLabel = new JLabel("Release Year: ");
-		releaseDate = new JTextField("", 15);
+		releaseDate = new JFormattedTextField(numFormat);
 		releaseBox.add(rLabel);
 		releaseBox.add(releaseDate);
 		wholeBox.add(releaseBox);
 		
 		Box boxBox = Box.createHorizontalBox();
 		JLabel bLabel = new JLabel("Box Office(only numbers!): ");
-		boxOffice = new JTextField("", 15);
+		
+		boxOffice = new JFormattedTextField(numFormat);
 		boxBox.add(bLabel);
 		boxBox.add(boxOffice);
 		wholeBox.add(boxBox);
