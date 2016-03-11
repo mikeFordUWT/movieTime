@@ -28,8 +28,8 @@ public class AddMovieFrame extends JFrame{
 	
 	
 	private JTextField titleField;
-	private JTextField runTime;
-	private JTextField releaseDate;
+	private JFormattedTextField runTime;
+	private JFormattedTextField releaseDate;
 	private JFormattedTextField boxOffice;
 	private JTextField directorFirst;
 	private JTextField directorLast;
@@ -222,7 +222,20 @@ public class AddMovieFrame extends JFrame{
 	}
 	
 	public String getBoxOffice() {
-		return boxOffice.getText();
+		int l = boxOffice.getText().length();
+		char[] toBox = new char[l];
+		if(l>0){
+			
+			for(int i =0; i<l; i++){
+				char c = boxOffice.getText().charAt(i);
+				if(Character.isDigit(c)){
+					toBox[i] = c;
+				}
+			}
+			
+		}
+		
+		return String.valueOf(toBox);
 		
 	}
 	

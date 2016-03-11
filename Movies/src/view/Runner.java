@@ -229,11 +229,11 @@ public class Runner {
 						&& !addFr.getActor2Last().equals("") && !addFr.getActor3First().equals("") && !addFr.getActor3Last().equals("")){
 					title = addFr.getMovieTitle();
 					String run = addFr.getRunTime();
-					runTime = Integer.parseInt(run);
+					runTime = Integer.parseInt(run.replaceAll(",", ""));
 					String box = addFr.getBoxOffice();
-					boxOffice = Integer.parseInt(box);
+					boxOffice = Integer.parseInt(box.replaceAll(",", ""));
 					String release = addFr.getReleaseDate();
-					releaseDate = Integer.parseInt(release);
+					releaseDate = Integer.parseInt(release.replaceAll(",", ""));
 					directorFirst = addFr.getDirectorFirst();
 					directorLast = addFr.getDirectorLast();
 					actor1First = addFr.getActor1First();
@@ -246,7 +246,6 @@ public class Runner {
 					System.out.println("That didn't work");
 				}
 
-				
 				
 				
 				//TODO
