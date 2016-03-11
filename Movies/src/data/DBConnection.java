@@ -1,5 +1,6 @@
 package data;
 
+import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -77,18 +78,21 @@ public class DBConnection {
 				+ "movie.movie_ID = '%" + movieTitle + "%';";
 		ResultSet rset = state.executeQuery(queryString);
 		while(rset.next()) {
-			
+			String id = rset.getString("movie_ID");
 			String title = rset.getString("title");
 			int runTime = rset.getInt("run_time");
 			int release = rset.getInt("release_date");
 			int boxOffice = rset.getInt("box_office");
 			String mpaa = "";
-			String toExecute = "SELECT `rating` FROM `mpaa` WHERE mpaa.rating = "+ rset.getString("mpaa_ID")+";";
-			ResultSet mset = state.executeQuery(toExecute);
+			String toExecute = "select distinct rating"
+					+ "from mpaa M, (select mpaa_ID from movie where title = '"+ title + "') Mo"
+					+ "where Mo.mpaa_ID = M.mpaa_ID order by rating;";
+			Statement state2 = connect.createStatement();
+			ResultSet mset = state2.executeQuery(toExecute);
 			while(mset.next()){
 				mpaa = mset.getString("rating");
 			}
-			Movie m = new Movie(title, runTime, release, boxOffice, mpaa);
+			Movie m = new Movie(id, title, runTime, release, boxOffice, mpaa);
 			
 			
 			String actorQuery = "select A.fname, A.mname, A.lname "
@@ -96,12 +100,14 @@ public class DBConnection {
 					+ "natural join (select movie_ID "
 					+ "from movie "
 					+ "where title = '"+title+"') A;";
-			ResultSet aSet = state.executeQuery(actorQuery);
+			Statement state3 = connect.createStatement();
+			ResultSet aSet = state3.executeQuery(actorQuery);
 			while(aSet.next()){
+				String aId = aSet.getString("actor_ID");
 				String firstName = aSet.getString("fname");
 				String midName = aSet.getString("mname");
 				String lastName = aSet.getString("lname");
-				Actor a = new Actor(firstName, midName, lastName);
+				Actor a = new Actor(aId, firstName, midName, lastName);
 				m.addActor(a);
 				
 			}
@@ -109,7 +115,9 @@ public class DBConnection {
 					+ "from director D, (select director_ID from movie"
 					+ "where title like '"+title+"') A "
 							+ "where D.director_ID = A.director_ID;";
-			ResultSet dSet = state.executeQuery(dQuery);
+			
+			Statement state4 = connect.createStatement();
+			ResultSet dSet = state4.executeQuery(dQuery);
 			while(dSet.next()){
 				String firstName = dSet.getString("fname");
 				String midName = dSet.getString("mname");
@@ -122,6 +130,70 @@ public class DBConnection {
 		return toReturn;
 		
 	}
+	
+	public ArrayList<Movie> getWatchList(String email){
+		return null;
+		
+	}
+	
+	public ArrayList<Movie> getFavorites(String email){
+		return null;
+		
+	}
+	
+	public User getUser(String email) throws SQLException{
+		User u = null;
+		Statement state = connect.createStatement();
+		String query = "SELECT `user_ID`,`fName`,`lName`,`email` "
+				+ "FROM user where email = '"+email+"';";
+		
+		ResultSet  uSet = state.executeQuery(query);
+		while (uSet.next()) {
+			String id = uSet.getString("user_ID");
+			String fName = uSet.getString("fname");
+			String lName = uSet.getString("lname");
+			String eMail = uSet.getString("email");
+			u = new User(id,fName, lName, eMail);
+			
+		}
+		
+		return u;
+		
+	}
+	
+	public List<String> getFavFromUser(String userID) throws SQLException {
+		Statement state = connect.createStatement();
+		ArrayList<String> movieTitle = new ArrayList<String>();
+		String query = "Select M.title From movie M, "
+				+ "(Select UM.movie_ID FROM user_movie UM "
+				+ "WHERE (UM.user_ID = '" +userID+"' AND UM.favorite_list "
+				+ "= 1)) U Where M.movie_ID = U.movie_ID;";
+		
+		ResultSet rSet= state.executeQuery(query);
+		while (rSet.next()) {
+			movieTitle.add(rSet.getString("title"));
+		}
+		return movieTitle;
+	}
+	
+	public List<String> getWatchFromUser(String userID) throws SQLException {
+		Statement state = connect.createStatement();
+		ArrayList<String> movieTitle = new ArrayList<String>();
+		String query = "Select M.title From movie M, "
+				+ "(Select UM.movie_ID FROM user_movie UM "
+				+ "WHERE (UM.user_ID = '" +userID+"' AND UM.watch_list "
+				+ "= 1)) U Where M.movie_ID = U.movie_ID;";
+		
+		ResultSet rSet= state.executeQuery(query);
+		while (rSet.next()) {
+			movieTitle.add(rSet.getString("title"));
+		}
+		return movieTitle;
+	}
+	
+	
+	
+	
 	
 	
 	

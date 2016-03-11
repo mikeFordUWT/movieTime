@@ -2,9 +2,11 @@ package view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import data.Actor;
+import data.DatabaseAccess;
 import data.Director;
 import data.Movie;
 import data.User;
@@ -24,27 +26,26 @@ public class Runner {
 		logFr = new LogInFrame();
 		
 
-		currentUser = new User("Michael", "Ford", "fordm13@uw.edu");
+		currentUser = new User("U01", "Michael", "Ford", "fordm13@uw.edu");
 
 		
 
-		Actor a1 = new Actor("Jack", null, "Nicholson");
-		Actor a2 = new Actor("Shelley", null, "Duvall");
-		Actor a3 = new Actor("Danny", null, "Lloyd");
-		currentMovie= new Movie("The Shining", 146, 1980, 44017374, "R");
+		Actor a1 = new Actor("A61","Jack", null, "Nicholson");
+		Actor a2 = new Actor("A22","Shelley", null, "Duvall");
+		Actor a3 = new Actor("A50", "Danny", null, "Lloyd");
+		currentMovie= new Movie("M09","The Shining", 146, 1980, 44017374, "R");
 
-		Movie Jaws = new Movie("Jaws", 115, 1976, 3737733, "PG");
 		currentMovie.addActor(a1);
 		currentMovie.addActor(a2);
 		currentMovie.addActor(a3);
 		currentUser.addToFavorites(currentMovie);
-		currentUser.addToWatchList(Jaws);
 		userFr = new UserFrame(currentUser);
 		userFr.setVisible(false);
+		
 
 
 		movieFr = new MovieFrame(currentMovie, currentUser, 4.5);
-		
+		movieFr.setVisible(false);
 		ArrayList<String> genres = new ArrayList<String>();
 		genres.add("Action");
 		genres.add("Sci-Fi");
@@ -54,7 +55,7 @@ public class Runner {
 		ratings.add("PG");
 		
 		addFr = new AddMovieFrame(genres, ratings);
-		
+		addFr.setVisible(false);
 //		movieFr.setVisible(false);
 		listeners();
 		
@@ -79,10 +80,17 @@ public class Runner {
 			public void mouseClicked(MouseEvent e){
 				if(logFr.getUserMap().containsKey(logFr.getUserName())
 						&& logFr.getUserMap().containsValue(logFr.getPassword())){
-
+					try {
+						currentUser = DatabaseAccess.getUser(logFr.getUserName());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					//					user.setUser(inputUser);
 					//TODO set it up so that the user will be based on username, finding a user that matches email
+					userFr= new UserFrame(currentUser);
 					userFr.setVisible(true);
+					
 					
 					logFr.setVisible(false);
 					logFr.getUserField().setText("");
@@ -124,7 +132,7 @@ public class Runner {
 
 				}
 				System.out.println(table);
-
+				
 				//				Movie newMovie = from title in database
 				//				movie = new MovieFrame();
 				//TODO if movie search returns more than one 
