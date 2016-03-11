@@ -7,8 +7,8 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String eMail;
-	private ArrayList<Movie> favorites;
-	private ArrayList<Movie> watchList;
+	private ArrayList<String> favorites;
+	private ArrayList<String> watchList;
 	
 	
 	public User(String id,String first, String last, String mail) {
@@ -17,8 +17,8 @@ public class User {
 		lastName = last;
 		eMail = mail;
 		
-		favorites = new ArrayList<Movie>();
-		watchList = new ArrayList<Movie>();
+		favorites = new ArrayList<String>();
+		watchList = new ArrayList<String>();
 	}
 
 	public String getID(){
@@ -38,19 +38,19 @@ public class User {
 	}
 
 	
-	public void addToFavorites(Movie theMovie){
+	public void addToFavorites(String theMovie){
 		favorites.add(theMovie);
 	}
 	
-	public void addToWatchList(Movie theMovie){
+	public void addToWatchList(String theMovie){
 		watchList.add(theMovie);
 	}
 	
-	public ArrayList<Movie> getFavorites(){
+	public ArrayList<String> getFavorites(){
 		return favorites;
 	}
 	
-	public ArrayList<Movie> getWatchList(){
+	public ArrayList<String> getWatchList(){
 		return watchList;
 	}
 	

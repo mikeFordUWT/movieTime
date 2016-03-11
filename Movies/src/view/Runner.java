@@ -38,13 +38,13 @@ public class Runner {
 		currentMovie.addActor(a1);
 		currentMovie.addActor(a2);
 		currentMovie.addActor(a3);
-		currentUser.addToFavorites(currentMovie);
+//		currentUser.addToFavorites(currentMovie);
 		userFr = new UserFrame(currentUser);
 		userFr.setVisible(false);
 		
 
 
-		movieFr = new MovieFrame(currentMovie, currentUser, 4.5);
+		movieFr = new MovieFrame(currentMovie);
 		movieFr.setVisible(false);
 		ArrayList<String> genres = new ArrayList<String>();
 		genres.add("Action");
@@ -78,10 +78,21 @@ public class Runner {
 		logFr.getLogButton().addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e){
+			
 				if(logFr.getUserMap().containsKey(logFr.getUserName())
 						&& logFr.getUserMap().containsValue(logFr.getPassword())){
 					try {
 						currentUser = DatabaseAccess.getUser(logFr.getUserName());
+						ArrayList<String> toAdd = DatabaseAccess.getFavs(currentUser.getID());
+						for(int i =0 ; i<toAdd.size(); i++){
+							currentUser.addToFavorites(toAdd.get(i));
+						}
+						
+						ArrayList<String> watch = DatabaseAccess.getWatch(currentUser.getID());
+						for(int i = 0; i<watch.size(); i++){
+							currentUser.addToWatchList(watch.get(i));
+							
+						}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -112,6 +123,8 @@ public class Runner {
 			public void mouseClicked(MouseEvent e){
 				userFr.setVisible(false);
 				logFr.setVisible(true);
+				
+				System.out.println("log out!");
 
 			}
 		});
@@ -129,7 +142,11 @@ public class Runner {
 				}else if (table.equals("director")){
 
 				} else if (table.equals("movie")){
-
+					
+					currentMovie = DatabaseAccess.getMovies(userFr.getSearchText()).get(0);
+					movieFr = new MovieFrame(currentMovie);
+					userFr.setVisible(false);
+					movieFr.setVisible(true);
 				}
 				System.out.println(table);
 				

@@ -21,5 +21,13 @@ public class DatabaseAccess {
 		return db.getUser(eMail);
 	}
 	
+	public static ArrayList<String> getFavs(String userID) throws SQLException {
+		return db.getFavFromUser(userID);
+	}
+	
+	public static ArrayList<String> getWatch(String userID) throws SQLException{
+		return db.getWatchFromUser(userID);
+	}
+	
 	
 }
