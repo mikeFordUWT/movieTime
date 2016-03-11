@@ -121,6 +121,8 @@ public class AddMovieFrame extends JFrame{
 		ratingBox.add(mpaaRatingBox);
 		wholeBox.add(ratingBox);
 		
+		
+		
 		Box gBox = Box.createHorizontalBox();
 		JLabel genreL = new JLabel("Genre: ");
 		gBox.add(genreL);
