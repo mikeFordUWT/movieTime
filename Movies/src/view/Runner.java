@@ -140,6 +140,8 @@ public class Runner {
 		movieAddFav();
 		movieLogOut();
 		movieRate();
+		addMovieListeners();
+		
 	}
 
 	private static void movieRate(){
@@ -199,17 +201,68 @@ public class Runner {
 
 	}
 	
-	private static void getAddMovieListeners(){
-//		getAddTitle();
+	private static void addMovieListeners(){
+		getAddMovie();
+		getLogOutButton();
+	}
+	private static void getAddMovie(){
+		addFr.getAddButton().addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e){
+				String title;
+				int runTime;
+				int boxOffice;
+				int releaseDate;
+				String directorFirst;
+				String directorLast;
+				String actor1First;
+				String actor1Last;
+				String actor2First;
+				String actor2Last;
+				String actor3First;
+				String actor3Last;
+				String genre = (String) addFr.getGenreBox().getSelectedItem();
+				String mpaa = (String) addFr.getMpaaRatingBox().getSelectedItem();
+				if(!addFr.getMovieTitle().equals("") && !addFr.getRunTime().equals("") && !addFr.getReleaseDate().equals("")
+						&& !addFr.getBoxOffice().equals("") && !addFr.getDirectorFirst().equals("") && !addFr.getDirectorLast().equals("")
+						&& !addFr.getActor1First().equals("") && !addFr.getActor1Last().equals("") && !addFr.getActor2First().equals("") 
+						&& !addFr.getActor2Last().equals("") && !addFr.getActor3First().equals("") && !addFr.getActor3Last().equals("")){
+					title = addFr.getMovieTitle();
+					String run = addFr.getRunTime();
+					runTime = Integer.parseInt(run);
+					String box = addFr.getBoxOffice();
+					boxOffice = Integer.parseInt(box);
+					String release = addFr.getReleaseDate();
+					releaseDate = Integer.parseInt(release);
+					directorFirst = addFr.getDirectorFirst();
+					directorLast = addFr.getDirectorLast();
+					actor1First = addFr.getActor1First();
+					actor1Last = addFr.getActor1Last();
+					actor2First = addFr.getActor2First();
+					actor2Last = addFr.getActor2Last();
+					actor3First = addFr.getActor3First();
+					actor3Last = addFr.getActor3Last();
+				}else{
+					System.out.println("That didn't work");
+				}
+
+				
+				
+				
+				//TODO
+			}
+		});
 	}
 	
-//	private static void getAddTitle(){
-//		addFr.getMovieTitle().addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e){
-//				
-//			}
-//		});
-//	}
+	private static void getLogOutButton(){
+		addFr.getLogOut().addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e){
+				addFr.setVisible(false);
+				logFr.setVisible(true);
+			}
+		});
+	}
+	
 
 }

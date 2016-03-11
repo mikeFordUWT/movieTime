@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 public class AddMovieFrame extends JFrame{
 	
 	private static final int LOGO_SIZE = 25;
+	private static final int FONT = 12;
 
 	private final Color upperColor = new Color(164,194,244);
 	private JPanel upperPanel;
@@ -27,10 +28,14 @@ public class AddMovieFrame extends JFrame{
 	private JTextField runTime;
 	private JTextField releaseDate;
 	private JTextField boxOffice;
-	private JTextField director;
-	private JTextField actor1;
-	private JTextField actor2;
-	private JTextField actor3;
+	private JTextField directorFirst;
+	private JTextField directorLast;
+	private JTextField actor1First;
+	private JTextField actor1Last;
+	private JTextField actor2First;
+	private JTextField actor2Last;
+	private JTextField actor3First;
+	private JTextField actor3Last;
 	
 	private JComboBox<String> mpaaRatingBox;
 	private JComboBox<String> genreBox;
@@ -77,15 +82,17 @@ public class AddMovieFrame extends JFrame{
 		titleBox.add(titleField);
 		wholeBox.add(titleBox);
 		
+		
+		
 		Box runBox = Box.createHorizontalBox();
-		JLabel runTimeL = new JLabel("Run Time: ");
+		JLabel runTimeL = new JLabel("Run Time(numbers only, in mins): ");
 		runTime = new JTextField("", 15);
 		runBox.add(runTimeL);
 		runBox.add(runTime);
 		wholeBox.add(runBox);
 		
 		Box releaseBox = Box.createHorizontalBox();
-		JLabel rLabel = new JLabel("Box Office: ");
+		JLabel rLabel = new JLabel("Release Year: ");
 		releaseDate = new JTextField("", 15);
 		releaseBox.add(rLabel);
 		releaseBox.add(releaseDate);
@@ -98,36 +105,6 @@ public class AddMovieFrame extends JFrame{
 		boxBox.add(boxOffice);
 		wholeBox.add(boxBox);
 		
-		Box dBox = Box.createHorizontalBox();
-		JLabel dLabel = new JLabel("Director: ");
-		director = new JTextField("", 15);
-		dBox.add(dLabel);
-		dBox.add(director);
-		wholeBox.add(dBox);
-		
-		Box a1Box = Box.createHorizontalBox();
-		JLabel a1Label = new JLabel("Actor 1: ");
-		actor1 = new JTextField("", 15);
-		a1Box.add(a1Label);
-		a1Box.add(actor1);
-		wholeBox.add(a1Box);
-		
-		Box a2Box = Box.createHorizontalBox();
-		JLabel a2Label = new JLabel("Actor 2: ");
-		actor2 = new JTextField("", 15);
-		a2Box.add(a2Label);
-		a2Box.add(actor2);
-		wholeBox.add(a2Box);
-		
-		Box a3Box = Box.createHorizontalBox();
-		JLabel a3Label = new JLabel("Actor 3: ");
-		actor3 = new JTextField("", 15);
-		a3Box.add(a3Label);
-		a3Box.add(actor3);
-		wholeBox.add(a3Box);
-		
-		
-		
 		Box ratingBox = Box.createHorizontalBox();
 		JLabel mppaL = new JLabel("MPAA: ");
 		ratingBox.add(mppaL);
@@ -139,6 +116,54 @@ public class AddMovieFrame extends JFrame{
 		gBox.add(genreL);
 		gBox.add(genreBox);
 		wholeBox.add(gBox);
+		
+		Box dBox = Box.createHorizontalBox();
+		JLabel dLabel = new JLabel("Director |  First: ");
+		JLabel dLabel2 = new JLabel("   Last: ");
+		directorFirst = new JTextField("", 15);
+		directorLast = new JTextField("", 15);
+		dBox.add(dLabel);
+		dBox.add(directorFirst);
+		dBox.add(dLabel2);
+		dBox.add(directorLast);
+		wholeBox.add(dBox);
+		
+		Box a1Box = Box.createHorizontalBox();
+		JLabel a1Label = new JLabel("Actor 1 |  First: ");
+		JLabel a1Label2 = new JLabel("   Last: ");
+		actor1First = new JTextField("", 15);
+		actor1Last = new JTextField("", 15);
+		a1Box.add(a1Label);
+		a1Box.add(actor1First);
+		a1Box.add(a1Label2);
+		a1Box.add(actor1Last);
+		wholeBox.add(a1Box);
+		
+		Box a2Box = Box.createHorizontalBox();
+		JLabel a2Label = new JLabel("Actor 2 |  First: ");
+		JLabel a2Label2 = new JLabel("  Last: ");
+		actor2First = new JTextField("", 15);
+		actor2Last = new JTextField("", 15);
+		a2Box.add(a2Label);
+		a2Box.add(actor2First);
+		a2Box.add(a2Label2);
+		a2Box.add(actor2Last);
+		wholeBox.add(a2Box);
+		
+		Box a3Box = Box.createHorizontalBox();
+		JLabel a3Label = new JLabel("Actor 3 |  First: ");
+		JLabel a3Label2 = new JLabel("  Last: ");
+		actor3First = new JTextField("", 15);
+		actor3Last = new JTextField("", 15);
+		a3Box.add(a3Label);
+		a3Box.add(actor3First);
+		a3Box.add(a3Label2);
+		a3Box.add(actor3Last);
+		wholeBox.add(a3Box);
+		
+		
+		
+		
 		
 		addMovie = new JButton("Add Movie");
 		wholeBox.add(addMovie);
@@ -163,46 +188,64 @@ public class AddMovieFrame extends JFrame{
 		
 		Box upperBox = Box.createVerticalBox();
 		upperBox.add(reelLogo);
+		upperBox.add(logOut);
 		upperPanel.add(upperBox);
 		upperPanel.setBackground(upperColor);
 		add(upperPanel, BorderLayout.NORTH);
 		
 	}
 
-	public JTextField getRunTime() {
-		return runTime;
+	public String getMovieTitle() {
+		return titleField.getText();
 	}
 	
-	public JTextField getMovieTitle() {
-		return titleField;
+	public String getRunTime() {
+		return runTime.getText();
 	}
 	
 	
 	
-	public JTextField getReleaseDate() {
-		return releaseDate;
+	
+	
+	public String getReleaseDate() {
+		return releaseDate.getText();
 	}
 	
-	public JTextField getBoxOffice() {
-		return boxOffice;
+	public String getBoxOffice() {
+		return boxOffice.getText();
+		
 	}
 	
-	public JTextField getDirector() {
-		return director;
+	public String getDirectorFirst() {
+		return directorFirst.getText();
 	}
 	
-	public JTextField getActor1() {
-		return actor1;
+	public String getDirectorLast(){
+		return directorLast.getText();
 	}
 	
-	public JTextField getActor2() {
-		return actor2;
+	public String getActor1First() {
+		return actor1First.getText();
 	}
 	
-	public JTextField getActor3() {
-		return actor3;
+	public String getActor1Last(){
+		return actor1Last.getText();
+	}
+	public String getActor2First() {
+		return actor2First.getText();
 	}
 	
+	public String getActor2Last(){
+		return actor2Last.getText();
+	}
+	
+	public String getActor3First() {
+		return actor3First.getText();
+	}
+	
+	public String getActor3Last(){
+		return actor3Last.getText();
+	}
 	public JComboBox<String> getMpaaRatingBox() {
 		return mpaaRatingBox;
 	}
