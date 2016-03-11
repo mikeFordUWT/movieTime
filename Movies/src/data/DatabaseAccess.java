@@ -10,7 +10,7 @@ public class DatabaseAccess {
 	
 	public ArrayList<Movie> getMovies(String title){
 		try{
-			db.getMovieDetails(title);
+			return db.getMovieDetails(title);
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
