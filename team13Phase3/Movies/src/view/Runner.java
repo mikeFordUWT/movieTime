@@ -5,8 +5,6 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 import data.Actor;
 import data.DatabaseAccess;
 import data.Director;
@@ -28,7 +26,6 @@ public class Runner {
 	private static User currentUser;
 	public static void main(String[] args) {
 		logFr = new LogInFrame();
-		logFr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		listeners();
 		
