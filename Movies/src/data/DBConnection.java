@@ -1,6 +1,5 @@
 package data;
 
-import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,16 +7,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Connects to the database
+ * 
+ * @author Michael Ford and Andy Bleich
+ *
+ */
 public class DBConnection {
-	
+
 	private static String USER = "root";
-	
+
 	private static String PASS = "mikeServer";
-	
+
 	private Connection connect;
-	private String serverURL = "jdbc:mysql://fordm13.vergil.u.washington.edu:1138/movies";
 	
-	
+
 	public DBConnection(String dbURL){
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -27,8 +31,8 @@ public class DBConnection {
 			System.out.println("SQLException: " + ex.getMessage());
 		}
 	} //end initialization
-	
-	
+
+
 	//Select query
 	public String SelectQuery(String query) {
 		Statement state;
@@ -41,19 +45,19 @@ public class DBConnection {
 			}else{
 				queryString = query;
 			}
-			
+
 			ResultSet rSet = state.executeQuery(queryString);
 			while(rSet.next()){
 				result = rSet.getString(1);
 			}
-			
+
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	//update Query
 	public int Update(String query){
 		Statement state;
@@ -66,16 +70,22 @@ public class DBConnection {
 		}
 		return result;
 	}
-	
+
+	//Retrieves movies details about movie being searched for
 	public ArrayList<Movie> getMovieDetails(String movieTitle) throws SQLException{
 		ArrayList<Movie> toReturn = new ArrayList<Movie>();
 		Statement state = connect.createStatement();
-		String queryString = "SELECT movie.title, movie.run_time,"
-				+ "movie.release_date,movie.box_office"
+
+		//		String query = "Select `movie_ID`, `title`"
+		//				+ "From movie Where `title` LIKE '%" + movieTitle 
+		//				+ "%';";
+		//		ResultSet rset = state.executeQuery(query);
+		String queryString = "SELECT `movie_ID`, `title`, `run_time`,"
+				+ " `release_date`, `box_office` "
 				+ "FROM "
-				+ "movie"
+				+ "movie "
 				+ "WHERE"
-				+ "movie.movie_ID = '%" + movieTitle + "%';";
+				+ " title LIKE '%" + movieTitle + "%';";
 		ResultSet rset = state.executeQuery(queryString);
 		while(rset.next()) {
 			String id = rset.getString("movie_ID");
@@ -84,18 +94,18 @@ public class DBConnection {
 			int release = rset.getInt("release_date");
 			int boxOffice = rset.getInt("box_office");
 			String mpaa = "";
-			String toExecute = "select distinct rating"
-					+ "from mpaa M, (select mpaa_ID from movie where title = '"+ title + "') Mo"
-					+ "where Mo.mpaa_ID = M.mpaa_ID order by rating;";
+			String toExecute = "select distinct `rating` "
+					+ "from mpaa M, (select `mpaa_ID` from movie where title LIKE '%"+ title + "%') Mo"
+					+ " where Mo.mpaa_ID = M.mpaa_ID order by rating;";
 			Statement state2 = connect.createStatement();
 			ResultSet mset = state2.executeQuery(toExecute);
 			while(mset.next()){
 				mpaa = mset.getString("rating");
 			}
 			Movie m = new Movie(id, title, runTime, release, boxOffice, mpaa);
-			
-			
-			String actorQuery = "select A.fname, A.mname, A.lname "
+
+
+			String actorQuery = "select A.actor_ID, A.fname, A.mname, A.lname "
 					+ "from actor A natural join actor_movie AM "
 					+ "natural join (select movie_ID "
 					+ "from movie "
@@ -109,13 +119,13 @@ public class DBConnection {
 				String lastName = aSet.getString("lname");
 				Actor a = new Actor(aId, firstName, midName, lastName);
 				m.addActor(a);
-				
+
 			}
 			String dQuery = "select distinct D.fname, D.mname, D.lname "
-					+ "from director D, (select director_ID from movie"
+					+ "from director D, (select director_ID from movie "
 					+ "where title like '"+title+"') A "
-							+ "where D.director_ID = A.director_ID;";
-			
+					+ "where D.director_ID = A.director_ID;";
+
 			Statement state4 = connect.createStatement();
 			ResultSet dSet = state4.executeQuery(dQuery);
 			while(dSet.next()){
@@ -128,18 +138,18 @@ public class DBConnection {
 			toReturn.add(m);
 		}
 		return toReturn;
-		
+
 	}
-	
 
 
-	
+
+	//retrieves user
 	public User getUser(String email) throws SQLException{
 		User u = null;
 		Statement state = connect.createStatement();
 		String query = "SELECT `user_ID`,`fName`,`lName`,`email` "
 				+ "FROM user where email = '"+email+"';";
-		
+
 		ResultSet  uSet = state.executeQuery(query);
 		while (uSet.next()) {
 			String id = uSet.getString("user_ID");
@@ -147,13 +157,15 @@ public class DBConnection {
 			String lName = uSet.getString("lname");
 			String eMail = uSet.getString("email");
 			u = new User(id,fName, lName, eMail);
-			
+
 		}
-		
+
 		return u;
-		
+
 	}
-	
+
+
+	//retrieves user favorites
 	public ArrayList<String> getFavFromUser(String userID) throws SQLException {
 		Statement state = connect.createStatement();
 		ArrayList<String> movieTitle = new ArrayList<String>();
@@ -161,14 +173,15 @@ public class DBConnection {
 				+ "(Select UM.movie_ID FROM user_movie UM "
 				+ "WHERE (UM.user_ID = '" +userID+"' AND UM.favorite_list "
 				+ "= 1)) U Where M.movie_ID = U.movie_ID;";
-		
+
 		ResultSet rSet= state.executeQuery(query);
 		while (rSet.next()) {
 			movieTitle.add(rSet.getString("title"));
 		}
 		return movieTitle;
 	}
-	
+
+	//retrieves user watchList
 	public ArrayList<String> getWatchFromUser(String userID) throws SQLException {
 		Statement state = connect.createStatement();
 		ArrayList<String> movieTitle = new ArrayList<String>();
@@ -176,18 +189,48 @@ public class DBConnection {
 				+ "(Select UM.movie_ID FROM user_movie UM "
 				+ "WHERE (UM.user_ID = '" +userID+"' AND UM.watch_list "
 				+ "= 1)) U Where M.movie_ID = U.movie_ID;";
-		
+
 		ResultSet rSet= state.executeQuery(query);
 		while (rSet.next()) {
 			movieTitle.add(rSet.getString("title"));
 		}
 		return movieTitle;
 	}
+
+
+	//insert entry into user-movie
+	public void addNewRating(String userID, String movieID, int rating) throws SQLException{
+
+		String query = "INSERT INTO `user_movie` (`user_ID`, `movie_ID`, `user_rating`, `watch_list`, `favorite_list`, `watched`) "
+				+ " VALUES ('"+userID+"', '"+movieID+"', '"+null+"', '1', '0', '0');";
+		Statement state = connect.createStatement();
+		state.executeUpdate(query);
+	}
+
+	//update rating into user-movie
+
+
+	//add to watch list(INSERT)
+	public void addToWatchList(String userID, String movieID) throws SQLException {
+		String query = "INSERT INTO `user_movie` (`user_ID`, `movie_ID`, `user_rating`, `watch_list`, `favorite_list`, `watched`) "
+				+ " VALUES ('"+userID+"', '"+movieID+"', '4', '1', '0', '0');";
+		Statement state = connect.createStatement();
+		state.executeUpdate(query);
+	}
 	
+	//add to favorites(UPDATE)
 	
-	
-	
-	
-	
-	
+	public void addToFavorites(String userID, String movieID) throws SQLException{
+		String query = "UPDATE `user_movie` SET `favorite_list` = '1' WHERE `user_movie`.`user_ID` = '"+ userID + "'"
+				+  " AND `user_movie`.`movie_ID` = '"+movieID+"';";
+		Statement state = connect.createStatement();
+		state.executeUpdate(query);
+	}
+	//Add to favorites(UPDATE)
+
+
+
+
+
+
 }
