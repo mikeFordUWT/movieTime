@@ -243,7 +243,7 @@ public class MovieFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				movieFr.setVisible(false);
-				userFr.setVisible(true);
+				userFr = new UserFrame(userFr.getUser(), logFr, movieFr, myMovie);
 			}
 		});
 	}

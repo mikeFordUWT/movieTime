@@ -122,8 +122,9 @@ public class UserFrame extends JFrame {
 	private void buildCenter(){
 		addFavorites();
 		addWatchList();
-		welcome = new JLabel("Welcome, " + currentUser.getFirstName());
+		welcome = new JLabel("      Welcome, " + currentUser.getFirstName()+"!");
 		welcome.setFont(new Font("San Serif", Font.PLAIN, WELCOME_SIZE));
+		welcome.setAlignmentX(.5f);
 		centerPanel = new JPanel();
 		Box mainBox = Box.createVerticalBox();
 		Box searchBox = Box.createHorizontalBox();
