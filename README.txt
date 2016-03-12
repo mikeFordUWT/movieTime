@@ -14,6 +14,9 @@ Some of the features, described in Phase 1 and 2, such as
 displaying a poster and being able to rate movies and see the avg 
 rating, are not built in.
 
+To run the code, just press run from the Runner class in the view package.
+
+*****LOG IN CREDENTIALS AT BOTTOM OF THIS DOCUMENT*******
 
 Criteria:
 
