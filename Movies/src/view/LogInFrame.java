@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 
 /**
  * Where every app starts and allows user to log in.
- * @author michaelford
+ * @author Michael Ford and Andy Bleich
  *
  */
 public class LogInFrame extends JFrame {

@@ -18,6 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
+/**
+ * Non functioning class.
+ * 
+ * @author Mike
+ *
+ */
 public class AddMovieFrame extends JFrame{
 	
 	private static final int LOGO_SIZE = 25;

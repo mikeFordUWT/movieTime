@@ -1,5 +1,12 @@
 package data;
 
+/**
+ * Director class.
+ * 
+ *  @author Michael Ford and Andy Bleich
+ *
+ */
+
 public class Director {
 	private String firstName;
 	private String middleName;

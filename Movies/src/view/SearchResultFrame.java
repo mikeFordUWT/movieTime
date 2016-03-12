@@ -16,6 +16,12 @@ import data.Actor;
 import data.Director;
 import data.Movie;
 
+/**
+ * Non - function class
+ * @author Mike
+ *
+ * @param <E>
+ */
 @SuppressWarnings("serial")
 public class SearchResultFrame<E> extends JFrame{
 	private static final int LOGO_SIZE = 0;

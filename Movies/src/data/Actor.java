@@ -1,7 +1,11 @@
 package data;
 
-import java.util.ArrayList;
-
+/**
+ * Actor class.
+ * 
+ *  @author Michael Ford and Andy Bleich
+ *
+ */
 public class Actor {
 	private String firstName;
 	private String middleName;

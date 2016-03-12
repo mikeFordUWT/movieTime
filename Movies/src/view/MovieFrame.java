@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -13,17 +16,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import data.DatabaseAccess;
 import data.Movie;
-import data.User;
+
+/**
+ * 	Frame for holding moving info
+ * 
+ *  @author Michael Ford and Andy Bleich
+ *
+ */
 
 public class MovieFrame extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
+
 	private static final int LOGO_SIZE = 25;
 
 	//The movie a page will be based on
 	private Movie myMovie;
 
-	//A User for if a user is logged in.
-	private User myUser;
 
 	//Labels for diplaying info about the movie.
 	private JLabel title;
@@ -45,6 +56,10 @@ public class MovieFrame extends JFrame {
 	private JButton logOut;
 	private JButton rateButton;
 	
+	
+	private LogInFrame logFr;
+	private UserFrame userFr;
+	
 	private JComboBox<Integer> movieRatingBox;
 	
 	
@@ -53,31 +68,24 @@ public class MovieFrame extends JFrame {
 	
 	private Box movieInfoBox;
 	private Box movieBox;
-	
-
-
-
-//	//A Movie Frame for when a user is not logged in.
-//	public MovieFrame(Movie inputMovie){
-//		super("Reel Log");
-//		myMovie = inputMovie;
-//		buildNotLoggedFrame();
-//	}
 
 	//A Movie Frame for is a user is logged in.
-	public MovieFrame(Movie inputMovie) {
+	public MovieFrame(Movie inputMovie, LogInFrame log, UserFrame user) {
 		super("Reel Log");
+		logFr =log;
 		myMovie = inputMovie;
-//		myUser = inputUser;
-//		String rate = Double.toString(rating);
-//		avgRating = new JLabel(rate);
-//		myUser = inputUser;
+		userFr = user;
+
 		buildFrame();
 	
 		this.setBackground(Color.WHITE);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
+		movieRate(this);
+		movieLogOut(this);
+		movieHomeListen(this);
+		movieAddWatchListen(this);
+		movieAddFav(this);
 	}
 
 
@@ -124,15 +132,15 @@ public class MovieFrame extends JFrame {
 		buttonBox.add(favAdd);
 		buttonBox.add(watchAdd);
 		Box avgRateBox = Box.createHorizontalBox();
-		JLabel aR = new JLabel("Average Rating:  ");
-		avgRateBox.add(aR);
+//		JLabel aR = new JLabel("Average Rating:  ");
+//		avgRateBox.add(aR);
 //		avgRateBox.add(avgRating);
 		
 		Box ratingBox = Box.createHorizontalBox();
 		rateButton = new JButton("Rate");
-		ratingBox.add(ratingLabel);
-		ratingBox.add(movieRatingBox);
-		ratingBox.add(rateButton);
+//		ratingBox.add(ratingLabel);
+//		ratingBox.add(movieRatingBox);
+//		ratingBox.add(rateButton);
 		movieInfoBox.add(buttonBox);
 		movieInfoBox.add(avgRateBox);
 		movieInfoBox.add(ratingBox);
@@ -200,5 +208,71 @@ public class MovieFrame extends JFrame {
 		return rateButton;
 	}
 
+	private void movieRate(MovieFrame movieFr){
+		movieFr.getRateButton().addMouseListener(new MouseAdapter(){
+			private String userID;
+			private String movieID;
 
+			@Override
+			public void mouseClicked(MouseEvent e){
+				int rating = (int) movieFr.getRatingBox().getSelectedItem();
+				try {
+					DatabaseAccess.InsertRating(userID, movieID, rating);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//TODO add rating to user-movie rating
+			}
+		});
+	}
+	
+	private void movieLogOut(MovieFrame movieFr){
+		movieFr.getLogOut().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+				movieFr.setVisible(false);
+				logFr.setVisible(true);
+			}
+		});
+	}
+	
+	private void movieHomeListen(MovieFrame movieFr){
+		movieFr.getHomeButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				movieFr.setVisible(false);
+				userFr.setVisible(true);
+			}
+		});
+	}
+	
+	private  void movieAddWatchListen(MovieFrame movieFr){
+		movieFr.getWatchAdd().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			try {
+				DatabaseAccess.AddToWatchInsert(userFr.getUser().getID(), myMovie.getID());
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			}
+		});
+	}
+	
+	private  void movieAddFav(MovieFrame movieFr){
+		movieFr.getFavAdd().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+				try {
+					DatabaseAccess.addToFavoritesUpdate(userFr.getUser().getID(), myMovie.getID());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
 }
