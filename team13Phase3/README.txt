@@ -5,7 +5,7 @@ if it doesn’t work.
 
 http://www.ccs.neu.edu/home/kathleen/classes/cs3200/JDBCtutorial.pdf
 
-That’s a link to a PDF that will walk through how to install the jar in build path.
+That’s a link to a PDF that will walk through how to install the jar in build path.(Which I also included in the zip file)
 
 A few things worth noting. 
 

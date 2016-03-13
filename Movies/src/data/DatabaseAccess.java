@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * 
  * 	Class to access database.
  * 
  *  @author Michael Ford and Andy Bleich

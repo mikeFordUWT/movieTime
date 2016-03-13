@@ -75,11 +75,7 @@ public class DBConnection {
 	public ArrayList<Movie> getMovieDetails(String movieTitle) throws SQLException{
 		ArrayList<Movie> toReturn = new ArrayList<Movie>();
 		Statement state = connect.createStatement();
-
-		//		String query = "Select `movie_ID`, `title`"
-		//				+ "From movie Where `title` LIKE '%" + movieTitle 
-		//				+ "%';";
-		//		ResultSet rset = state.executeQuery(query);
+		
 		String queryString = "SELECT `movie_ID`, `title`, `run_time`,"
 				+ " `release_date`, `box_office` "
 				+ "FROM "
@@ -197,7 +193,6 @@ public class DBConnection {
 		return movieTitle;
 	}
 
-
 	//insert entry into user-movie
 	public void addNewRating(String userID, String movieID, int rating) throws SQLException{
 
@@ -206,9 +201,6 @@ public class DBConnection {
 		Statement state = connect.createStatement();
 		state.executeUpdate(query);
 	}
-
-	//update rating into user-movie
-
 
 	//add to watch list(INSERT)
 	public void addToWatchList(String userID, String movieID) throws SQLException {
@@ -219,18 +211,10 @@ public class DBConnection {
 	}
 	
 	//add to favorites(UPDATE)
-	
 	public void addToFavorites(String userID, String movieID) throws SQLException{
 		String query = "UPDATE `user_movie` SET `favorite_list` = '1' WHERE `user_movie`.`user_ID` = '"+ userID + "'"
 				+  " AND `user_movie`.`movie_ID` = '"+movieID+"';";
 		Statement state = connect.createStatement();
 		state.executeUpdate(query);
 	}
-	//Add to favorites(UPDATE)
-
-
-
-
-
-
 }

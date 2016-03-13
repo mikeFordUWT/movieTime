@@ -1,6 +1,12 @@
 package data;
 
 import java.util.ArrayList;
+/**
+ * A Movie object class.
+ * 
+ * @author Michael Ford and Andy Bleich
+ *
+ */
 
 public class Movie {
 	private String myTitle;
